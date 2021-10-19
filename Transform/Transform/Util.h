@@ -9,7 +9,7 @@ typedef unsigned char Byte;
 typedef Byte* PByte;
 typedef Byte* PByteC;
 typedef unsigned short UShort;
-typedef unsigned int UInt;
+typedef unsigned int UInt32;
 
 UShort CRC16(PByte puchMsg, UShort usDataLen);
 

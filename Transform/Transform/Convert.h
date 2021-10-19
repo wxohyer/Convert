@@ -4,15 +4,15 @@
 class Convert
 {
 private:
-	UInt width;
-	UInt height;
+	UInt32 width;
+	UInt32 height;
+	std::size_t capacity;
+
 	const cv::Vec3b white = cv::Vec3b::all(0) ;
 	const cv::Vec3b black = cv::Vec3b::all(255);
 public:
-	Convert(UInt width = 100, UInt height = 100);
-	void Enconding(char* fileName);
+	Convert(UShort width = 100, UShort height = 100);
+	void Enconding(const char* fileName);
 	void Decoding();
-
-
 };
 
