@@ -155,12 +155,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Analysis.cpp" />
+    <ClCompile Include="Convert.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Analysis.h" />
+    <ClInclude Include="Convert.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Util.h" />
   </ItemGroup>

@@ -48,7 +48,7 @@ static unsigned char auchCRCLo[] = {
 //unsigned char *puchMsg;  //含有生成CRC所使用的二进制数据的报文缓存区指针。
 //unsigned short usDataLen; //报文缓存区中的字节数。
 //CRC生成函数
-UShort CRC16(pByte puchMsg, UShort usDataLen)
+UShort CRC16(PByte puchMsg, UShort usDataLen)
 {
     unsigned char uchCRCHi = 0xFF; /* CRC的高字节初始化 */
     unsigned char uchCRCLo = 0xFF;  /* CRC的低字节初始化 */

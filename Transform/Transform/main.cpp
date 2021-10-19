@@ -8,6 +8,9 @@ using namespace cv;
 
 int main(int argc, char* argv[])
 {
+    for (int i = 0; i < argc; i++) {
+        std::cout << argv[i] << endl;
+    }
     std::cout << "Transform!\n";
     Transform tt;
     Transform&& transform = Transform::Default();
@@ -34,7 +37,7 @@ int main(int argc, char* argv[])
     // std::cout.write(buffer, size);
 
     if (transform.bytes() > size) {
-        transform.convert((pByte)buffer, size, "Image1.png");
+        transform.convert((PByte)buffer, size, "Image1.png");
     }
 
     delete[] buffer;

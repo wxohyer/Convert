@@ -140,7 +140,7 @@ void Transform::fillPixel(Mat& mat, int x, int y, Vec3b& fillColor) {
         }
     }
 }
-Byte Transform::fetch(pByte bytes, int bitPos, int stride) {
+Byte Transform::fetch(PByte bytes, int bitPos, int stride) {
     int bytePos = bitPos / 8;
     int left = bitPos % 8;
     Byte result = 0;
@@ -184,7 +184,7 @@ Byte Transform::fetch(pByte bytes, int bitPos, int stride) {
     return result;
 }
 
-void Transform::convert(pByte bytes, int length, std::string imageName) {
+void Transform::convert(PByte bytes, int length, std::string imageName) {
     Mat mat(imgWidth, imgHeight, CV_8UC3,Scalar::all(168));  
     auto take = [=](const int bitPos, int stride)->Byte {
         int bytePos = bitPos / 8;

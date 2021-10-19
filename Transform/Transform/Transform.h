@@ -25,7 +25,7 @@ public:
     int colorLevel;
 public:
     Transform(int width = 100, int height = 100, int pixelStride = 15,int colorLevel = 16);
-    void convert(pByte bytes, int length, std::string imageName);
+    void convert(PByte bytes, int length, std::string imageName);
     int bytes();
     int bits();
     int validBits();
@@ -35,7 +35,7 @@ public:
     void drawTopRightCorner(cv::Mat& mat, int x, int y, int value);
     void drawBottomLeftCorner(cv::Mat& mat, int x, int y, int value);
     inline void fillPixel(Mat& mat, int x, int y, Vec3b& fillColor);
-    Byte fetch(pByte bytes, int bitPos, int stride);
+    Byte fetch(PByte bytes, int bitPos, int stride);
 public:
     inline static Transform Default() {
         return Transform(50,50,15,8);
