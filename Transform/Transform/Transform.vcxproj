@@ -162,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Analysis.h" />
+    <ClInclude Include="CLI11.hpp" />
     <ClInclude Include="Convert.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Util.h" />

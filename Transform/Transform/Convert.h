@@ -12,7 +12,12 @@ private:
 	const cv::Vec3b black = cv::Vec3b::all(255);
 public:
 	Convert(UShort width = 100, UShort height = 100);
+	bool Match(const uchar* ptr);
 	void Enconding(const char* fileName);
 	void Decoding();
+	//static method
+	inline static Convert Defualt() {
+		return Convert(256, 256);
+	}
 };
 

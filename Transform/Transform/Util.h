@@ -1,7 +1,8 @@
 #ifndef TRANSFORM_UTIL
 #define TRANSFORM_UTIL
+#include <string>
+#include <typeinfo>
 #include <stdio.h>
-#include <string.h>
 #include <time.h>
 #include <stdarg.h>
 
@@ -12,6 +13,22 @@ typedef unsigned short UShort;
 typedef unsigned int UInt32;
 
 UShort CRC16(PByte puchMsg, UShort usDataLen);
+template<typename ... Args>
+std::string str_format(const char* pformat, Args... args) {
+	int len_str = std::snprintf(nullptr, 0, pformat, args...);
+	if (0 >= len_str)
+		return std::string("");
+	len_str++;
+	char* pstr_out = nullptr;
+	pstr_out = new (std::nothrow)char[len_str];
+	if (NULL == pstr_out || nullptr == pstr_out)
+		return std::string("");
+	std::snprintf(pstr_out, len_str, pformat, args...);
+	std::string str(pstr_out);
+	delete pstr_out;
+	pstr_out = nullptr;
+	return str;
+};
 
 //#ifdef NOLOG
 //#define LOG(...)
