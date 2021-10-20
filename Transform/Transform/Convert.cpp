@@ -3,9 +3,12 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <filesystem>
 
 using namespace std;
+using namespace std::filesystem;
 using namespace cv;
+
 /// <summary>
 ///  constructor
 ///  ¡öwith¡õheight¡öindex¡õtotal¡ölength end¡õ¡ö
@@ -15,24 +18,30 @@ using namespace cv;
 Convert::Convert(UShort width, UShort height) {
 	this->width = width;
 	this->height = height;
-	this->capacity = ((int)this->width) * ((int)this->height) * 3 - (1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 4 + 2);
+	this->capacity = static_cast<size_t>(this->width) * static_cast<size_t>(this->height) * 3 - (1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 4 + 2);
+	//path
+	path output(".\\output");
+	if (!exists(output)) {
+		cout << "not exit directory" << endl;
+		create_directory(output);
+	}else {
+		std::cout << "OK" << endl;
+	}
 }
+
+///// <summary>
+/////  match header
+///// </summary>
+///// <param name="ptr"></param>
+///// <returns></returns>
+//bool Convert::Match(const uchar* ptr) {
+//	
+//}
+
 /// <summary>
-///  match header
+///  enconding
 /// </summary>
-/// <param name="ptr"></param>
-/// <returns></returns>
-bool Convert::Match(const uchar* ptr) {
-	if (*ptr == 0x00 && *(ptr + 3) == 0xff
-		&& *(ptr + 6) == 0x00
-		&& *(ptr + 9) == 0xff
-		&& *(ptr + 12) == 0x00
-		&& *(ptr + 17 + this->capacity) == 0xff
-		&& *(ptr + 18 + this->capacity) == 0xff)
-		return true;
-	else
-		return false;
-}
+/// <param name="fileName"></param>
 void Convert::Enconding(const char* fileName) {
 	std::ifstream ifs(fileName, std::ifstream::binary);
 	// get pointer to associated buffer object
@@ -90,10 +99,10 @@ void Convert::Enconding(const char* fileName) {
 		auto dataLength = this->capacity;
 		if (islast)
 			dataLength = left;
-		//wriete data
+		//Wriete data
 		memcpy(pData, buffer, dataLength);
 		buffer += dataLength;
-		//write end
+		//Write end
 		pData += this->capacity;
 		*pData = 0xff;
 		pData += 1;
@@ -108,3 +117,4 @@ void Convert::Enconding(const char* fileName) {
 void Convert::Decoding() {
 
 }
+
