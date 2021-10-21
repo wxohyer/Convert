@@ -1,42 +1,34 @@
-#include "opencv2/core.hpp"
-#include <opencv2/imgcodecs.hpp>
-#include <iostream>
-#include <fstream>
-#include "Transform.h"
-#include "Convert.h"
-#include "CLI11.hpp"
-using namespace std;
-using namespace cv;
+//#include "opencv2/core.hpp"
+//#include <opencv2/imgcodecs.hpp>
+//#include <iostream>
+//#include <fstream>
+//#include "Transform.h"
+//#include "Convert.h"
 
+//using namespace std;
+//using namespace cv;
+#include "App.h"
 void matchTest() {
-    auto mat = imread(".\\output\\501-502.bmp");
+   /* auto mat = imread(".\\output\\501-502.bmp");
     if (Convert::Match(mat.data)) {
         cout << "OK" << endl;
     }
     else {
         cout << "False" << endl;
-    }
+    }*/
 }
 
 int main(int argc, char** argv) {
+    cli(argc,argv);
+    
+   /* auto convert = Convert::Defualt();
+    convert.Enconding("transform.rar");*/
 
-    CLI::App app("Transform data to data table");
-
-    int width = 0;
-    app.add_option("-w,--width", width, "an integer value")->capture_default_str();
-
-    bool flag;
-    app.add_flag("-f,--flag", flag, "a flag option");
-
-    CLI11_PARSE(app, argc, argv);
-    std::cout << width << endl;
-    auto convert = Convert::Defualt();
-    convert.Enconding("transform.rar");
-
-    matchTest();
+    //matchTest();
 
     return 0;
 }
+
 
 
 

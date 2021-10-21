@@ -14,7 +14,7 @@ public:
 	Convert(UShort width = 100, UShort height = 100);
 	
 	void Enconding(const char* fileName);
-	void Decoding();
+	void static Refining(const char* dataPath);
 	/// <summary>
 	///  Default
 	/// </summary>

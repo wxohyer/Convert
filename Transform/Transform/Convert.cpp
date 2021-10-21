@@ -1,5 +1,6 @@
 #include "Convert.h"
 #include <opencv2/imgcodecs.hpp>
+#include <map>
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -19,14 +20,6 @@ Convert::Convert(UShort width, UShort height) {
 	this->width = width;
 	this->height = height;
 	this->capacity = static_cast<size_t>(this->width) * static_cast<size_t>(this->height) * 3 - (1 + 2 + 1 + 2 + 1 + 2 + 1 + 2 + 1 + 4 + 2);
-	//path
-	path output(".\\output");
-	if (!exists(output)) {
-		cout << "not exit directory" << endl;
-		create_directory(output);
-	}else {
-		std::cout << "OK" << endl;
-	}
 }
 
 ///// <summary>
@@ -43,6 +36,16 @@ Convert::Convert(UShort width, UShort height) {
 /// </summary>
 /// <param name="fileName"></param>
 void Convert::Enconding(const char* fileName) {
+	//path
+	path output(".\\output");
+	if (!exists(output)) {
+		cout << "not exit directory" << endl;
+		create_directory(output);
+	}else {
+		remove_all(output);
+		create_directory(output);
+	}
+
 	std::ifstream ifs(fileName, std::ifstream::binary);
 	// get pointer to associated buffer object
 	std::filebuf* pbuf = ifs.rdbuf();
@@ -112,9 +115,32 @@ void Convert::Enconding(const char* fileName) {
 		imageName << ".\\output\\" << i << '-' << total << ".bmp";
 		cv::imwrite(imageName.str(), mat);
 	}
+	delete []buffer;
+}
+ /// <summary>
+ ///  Refining
+ /// </summary>
+ /// <param name="dataPath"></param>
+ void Convert::Refining(const char* dataPath) {
+	path dir(dataPath);
+	if (!exists(dir))
+		return;
+	directory_entry entry(dir);
+	if (entry.status().type() != file_type::directory)
+		return;
+	std::map<int, char*> datas;
+	
+	directory_iterator list(dir);
+	for (auto& it : list) {
+		std::cout << it.path().filename() << std::endl;
+		auto img = cv::imread(it.path().string());
+	}
+	std::ofstream ofs("./refining.data", ofstream::binary);
+	if (!ofs.is_open())
+		return;
+
+	//ofs.write()
+	ofs.close();
 }
 
-void Convert::Decoding() {
-
-}
-
+ 
