@@ -1,6 +1,7 @@
 #include "Convert.h"
 #include <opencv2/imgcodecs.hpp>
 #include <map>
+#include <tuple>
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -56,6 +57,7 @@ void Convert::Enconding(const char* fileName) {
 
 	// allocate memory to contain file data
 	char* buffer = new char[fileSize];
+	auto bufferPos = buffer;
 	// get file data
 	pbuf->sgetn(buffer, fileSize);
 	ifs.close();
@@ -103,8 +105,8 @@ void Convert::Enconding(const char* fileName) {
 		if (islast)
 			dataLength = left;
 		//Wriete data
-		memcpy(pData, buffer, dataLength);
-		buffer += dataLength;
+		memcpy(pData, bufferPos, dataLength);
+		bufferPos += dataLength;
 		//Write end
 		pData += this->capacity;
 		*pData = 0xff;
@@ -128,18 +130,39 @@ void Convert::Enconding(const char* fileName) {
 	directory_entry entry(dir);
 	if (entry.status().type() != file_type::directory)
 		return;
-	std::map<int, char*> datas;
-	
+
+	std::map<int, std::tuple<char*,int>> datas;
 	directory_iterator list(dir);
 	for (auto& it : list) {
 		std::cout << it.path().filename() << std::endl;
 		auto img = cv::imread(it.path().string());
+		if (!img.empty()) {
+			//scan image
+			auto ptr = img.data;
+			while (ptr != img.dataend)
+			{
+				if (Convert::Match(ptr)) {
+					auto index = *(UShort*)(ptr + 7);
+					auto datasize = *(UInt32*)(ptr + 13);
+					char* buffer = new char[datasize];
+					memcpy(buffer, ptr + 17, datasize);
+					datas.insert(pair<int, tuple<char*, int>>(index, make_tuple(buffer, datasize)));
+					break;
+				}
+				else {
+					ptr++;
+				}
+			}
+		}
 	}
 	std::ofstream ofs("./refining.data", ofstream::binary);
 	if (!ofs.is_open())
 		return;
-
-	//ofs.write()
+	for (auto& it : datas) {
+		std::cout << it.first;
+		ofs.write(std::get<0>(it.second), std::get<1>(it.second));
+		delete[] get<0>(it.second);
+	}
 	ofs.close();
 }
 
