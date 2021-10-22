@@ -47,77 +47,77 @@ void Convert::Enconding(const char* fileName) {
 		create_directory(output);
 	}
 
-	//std::ifstream ifs(fileName, std::ifstream::binary);
-	//// get pointer to associated buffer object
-	//std::filebuf* pbuf = ifs.rdbuf();
+	std::ifstream ifs(fileName, std::ifstream::binary);
+	// get pointer to associated buffer object
+	std::filebuf* pbuf = ifs.rdbuf();
 
-	//// get file size using buffer's members
-	//std::size_t fileSize = pbuf->pubseekoff(0, ifs.end, ifs.in);
-	//pbuf->pubseekpos(0, ifs.in);
+	// get file size using buffer's members
+	std::size_t fileSize = pbuf->pubseekoff(0, ifs.end, ifs.in);
+	pbuf->pubseekpos(0, ifs.in);
 
-	//// allocate memory to contain file data
-	//char* buffer = new char[fileSize];
-	//auto bufferPos = buffer;
-	//// get file data
-	//pbuf->sgetn(buffer, fileSize);
-	//ifs.close();
+	// allocate memory to contain file data
+	char* buffer = new char[fileSize];
+	auto bufferPos = buffer;
+	// get file data
+	pbuf->sgetn(buffer, fileSize);
+	ifs.close();
 
-	////enconding
-	//auto total = fileSize / this->capacity;
-	//UInt32 left = fileSize % this->capacity;
-	//if (left != 0)
-	//	total += 1;
+	//enconding
+	auto total = fileSize / this->capacity;
+	UInt32 left = fileSize % this->capacity;
+	if (left != 0)
+		total += 1;
 	//output
-	//for (int i = 0; i < total; i++) {
-	//	bool islast = ((i == total-1) && (left != 0));
-	//	cv::Mat mat(this->width, this->height, CV_8UC3, cv::Scalar::all(168));
-	//	//write head
-	//	auto pData = mat.data;
-	//	*pData = 0;
-	//	pData += 1;
-	//	UShort* pWidth = (UShort*)pData;
-	//	*pWidth = this->width;
-	//	pData += 2;
-	//	*pData = 0xff;
-	//	pData += 1;
-	//	UShort* pHeight = (UShort*)pData;
-	//	*pHeight = this->height;
-	//	pData += 2;
-	//	*pData = 0x00;
-	//	pData += 1;
-	//	UShort* pIndex = (UShort*)pData;
-	//	*pIndex = i;
-	//	pData += 2;
-	//	*pData = 0xff;
-	//	pData += 1;
-	//	UShort* pTotal = (UShort*)pData;
-	//	*pTotal = total;
-	//	pData += 2;
-	//	*pData = 0x00;
-	//	pData += 1;
-	//	UInt32* pLength = (UInt32*)pData;
-	//	if (islast)
-	//		*pLength = left;
-	//	else
-	//		*pLength = this->capacity;
-	//	pData += 4;
-	//	auto dataLength = this->capacity;
-	//	if (islast)
-	//		dataLength = left;
-	//	//Wriete data
-	//	memcpy(pData, bufferPos, dataLength);
-	//	bufferPos += dataLength;
-	//	//Write end
-	//	pData += this->capacity;
-	//	*pData = 0xff;
-	//	pData += 1;
-	//	*pData = 0;
-	//	//save to file
-	//	std::ostringstream imageName;
-	//	imageName << ".\\output\\" << i << '-' << total << ".bmp";
-	//	cv::imwrite(imageName.str(), mat);
-	//}
-	//delete []buffer;
+	for (int i = 0; i < total; i++) {
+		bool islast = ((i == total-1) && (left != 0));
+		cv::Mat mat(this->width, this->height, CV_8UC3, cv::Scalar::all(168));
+		//write head
+		auto pData = mat.data;
+		*pData = 0;
+		pData += 1;
+		UShort* pWidth = (UShort*)pData;
+		*pWidth = this->width;
+		pData += 2;
+		*pData = 0xff;
+		pData += 1;
+		UShort* pHeight = (UShort*)pData;
+		*pHeight = this->height;
+		pData += 2;
+		*pData = 0x00;
+		pData += 1;
+		UShort* pIndex = (UShort*)pData;
+		*pIndex = i;
+		pData += 2;
+		*pData = 0xff;
+		pData += 1;
+		UShort* pTotal = (UShort*)pData;
+		*pTotal = total;
+		pData += 2;
+		*pData = 0x00;
+		pData += 1;
+		UInt32* pLength = (UInt32*)pData;
+		if (islast)
+			*pLength = left;
+		else
+			*pLength = this->capacity;
+		pData += 4;
+		auto dataLength = this->capacity;
+		if (islast)
+			dataLength = left;
+		//Wriete data
+		memcpy(pData, bufferPos, dataLength);
+		bufferPos += dataLength;
+		//Write end
+		pData += this->capacity;
+		*pData = 0xff;
+		pData += 1;
+		*pData = 0;
+		//save to file
+		std::ostringstream imageName;
+		imageName << ".\\output\\" << i << '-' << total << ".bmp";
+		cv::imwrite(imageName.str(), mat);
+	}
+	delete []buffer;
 }
  /// <summary>
  ///  Refining
