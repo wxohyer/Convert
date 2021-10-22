@@ -7,30 +7,33 @@
 
 //using namespace std;
 //using namespace cv;
-#include "App.h"
-void matchTest() {
-   /* auto mat = imread(".\\output\\501-502.bmp");
-    if (Convert::Match(mat.data)) {
-        cout << "OK" << endl;
-    }
-    else {
-        cout << "False" << endl;
-    }*/
-}
+
+//#define _CRTDBG_MAP_ALLOC
+//#include <stdlib.h>¡¡
+//#include <crtdbg.h>
+//#include <iostream>
+
+#include "App.h"
+
+//void matchTest() {
+//   /* auto mat = imread(".\\output\\501-502.bmp");
+//    if (Convert::Match(mat.data)) {
+//        cout << "OK" << endl;
+//    }
+//    else {
+//        cout << "False" << endl;
+//    }*/
+//}
 
 int main(int argc, char** argv) {
     cli(argc,argv);
     
    /* auto convert = Convert::Defualt();
     convert.Enconding("transform.rar");*/
-
     //matchTest();
-
+    //_CrtDumpMemoryLeaks();
     return 0;
 }
-
-
-
 
 //int main(int argc, char* argv[]) {
 //	/*wchar_t curPath[512];

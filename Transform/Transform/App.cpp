@@ -56,37 +56,3 @@ int cli(int argc, char** argv) {
 bool match(const char* path) {
     return true;
 }
-
-
-//export module App;
-//import <iostream>;
-//import <fstream>;
-//import <opencv2/core.hpp>;
-//import <opencv2/imgcodecs.hpp>;
-//
-//import "CLI11.hpp";
-
-//#include "opencv2/core.hpp"
-//#include <opencv2/imgcodecs.hpp>
-//#include <fstream>
-
-//#include "CLI11.hpp"
-//using namespace std;
-//using namespace cv;
-//namespace App {
-//    export int cli(int argc, char** argv) {
-//        CLI::App app("Transform data to data table");
-//        //cv::Mat mat;
-//
-//        int width = 0;
-//        app.add_option("-w,--width", width, "an integer value")->capture_default_str();
-//
-//        bool flag;
-//        app.add_flag("-f,--flag", flag, "a flag option");
-//        std::cout << "test";
-//
-//        CLI11_PARSE(app, argc, argv);
-//        std::cout << "OKOKOK" << std::endl;
-//        return 0;
-//    }
-//}
